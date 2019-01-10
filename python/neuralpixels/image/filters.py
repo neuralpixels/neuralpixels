@@ -36,7 +36,7 @@ def gaus_blur(inputs):
     a[2, 0, :, :] = 0.0625
     a[2, 2, :, :] = 0.0625
     kernel = tf.constant(a, dtype=tf.float32)
-    return _convolve(inputs, kernel)
+    return _convolve(inputs, kernel, pad=4)
 
 
 def box_blur(inputs, radius=4):
@@ -45,7 +45,7 @@ def box_blur(inputs, radius=4):
     a[:, :, :, :] = 1 / (diameter * diameter)
     kernel = tf.constant(a, dtype=tf.float32)
 
-    return _convolve(inputs, kernel, pad=None)
+    return _convolve(inputs, kernel, pad=radius + 1)
 
 
 def sharpen(inputs, intensity=8, radius=3):
@@ -57,7 +57,7 @@ def sharpen(inputs, intensity=8, radius=3):
     a[:, :, :, :] = x
     a[center, center, :, :] = intensity
     kernel = tf.constant(a, dtype=tf.float32)
-    return tf.add(input, _convolve(inputs, kernel, pad=None))
+    return tf.add(inputs, _convolve(inputs, kernel, pad=radius + 1))
 
 
 def edge(inputs, intensity=10, radius=3):

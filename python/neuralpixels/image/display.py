@@ -6,7 +6,8 @@ from PIL import ImageFont
 
 
 def make_collage(images, match_size=True, v_stack=False, uint_clip=True):
-    font_path = os.path.join(os.path.dirname(__file__), 'assets, OpenSans.ttf')
+    font_path = os.path.join(os.path.dirname(__file__), 'assets', 'OpenSans.ttf')
+
     padding = 5
     font_box = 30
     font_size = 16

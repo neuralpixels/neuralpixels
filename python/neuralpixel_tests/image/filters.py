@@ -2,8 +2,9 @@ import os
 from os.path import dirname
 import tensorflow as tf
 import numpy as np
-from neuralpixels.image import filters
-from scipy.misc import imread
+from neuralpixels.image import filters, make_collage
+from scipy.misc import imread, imsave
+from collections import OrderedDict
 
 
 def run_filters_test():
@@ -30,25 +31,32 @@ def run_filters_test():
         filters.content_emphasis,
         filters.emboss
     ]
-
+    collage_dict = OrderedDict()
+    collage_dict['input'] = test_img.copy().astype(np.uint8)
     with tf.Session(config=tfconfig) as sess:
         func_name_width = 25
         for func in functions:
             name_str = '{} {} '.format(func.__name__, ''.rjust(func_name_width - len(func.__name__), '.'))
             print(' .{}'.format(name_str), end='')
             try:
-                _out = filters.gaus_blur(_test_img_expanded)
+                _out = func(_test_img_expanded)
                 out = sess.run(_out)
                 assert test_img_expanded.shape == out.shape, \
                     'Output shapes do not match. Output:{} target:{}'.format(out.shape, test_img_expanded.shape)
 
                 print('PASSED')
                 num_passed += 1
+                collage_dict[str(func.__name__)] = np.squeeze(out, 0)
             except Exception as ex:
                 print('FAIL')
                 print('    {}'.format(str(ex)))
                 num_failed += 1
     sess.close()
+    if num_failed == 0:
+        output_img_path = os.path.join(project_root, 'assets', 'python', 'tests', 'neuralpixels.image.filters.jpg')
+        os.makedirs(dirname(output_img_path), exist_ok=True)
+        imsave(output_img_path, make_collage(collage_dict))
+
     return num_passed, num_failed
 
 

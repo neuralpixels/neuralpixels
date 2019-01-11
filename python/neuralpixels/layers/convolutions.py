@@ -80,10 +80,11 @@ def subpixel_upscale(inputs, zoom=2, name='subpixel_upscale', trainable=False, l
             kernel_weights = tf.get_variable(
                 name='kernel',
                 shape=kernel.shape,
-                initializer=tf.constant_initializer(kernel)
+                initializer=tf.constant_initializer(kernel),
+                dtype=inputs.dtype
             )
         else:
-            kernel_weights = kernel
+            kernel_weights = tf.constant(kernel, dtype=inputs.dtype)
 
         out = tf.nn.conv2d_transpose(inputs, kernel_weights, tf_shape, strides_shape, padding='VALID')
 
@@ -155,10 +156,11 @@ def subpixel_downscale(inputs, zoom=2, name='subpixel_downscale', trainable=Fals
             kernel_weights = tf.get_variable(
                 name='kernel',
                 shape=kernel.shape,
-                initializer=tf.constant_initializer(kernel)
+                initializer=tf.constant_initializer(kernel),
+                dtype=inputs.dtype
             )
         else:
-            kernel_weights = kernel
+            kernel_weights = tf.constant(kernel, dtype=inputs.dtype)
 
         out = tf.nn.conv2d(inputs, kernel_weights, strides_shape, padding='VALID')
 

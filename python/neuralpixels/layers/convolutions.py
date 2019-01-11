@@ -68,7 +68,7 @@ def subpixel_upscale(inputs, zoom=2, name='subpixel_upscale', trainable=False, l
                 if legacy:
                     kernel[y, x, c, c * r * r + i] = 1
                 else:
-                    kernel[y, x, c, c + (i * in_channels)] = 1
+                    kernel[y, x, c, c + (i * out_channels)] = 1
                 i += 1
 
         new_rows, new_cols = int(rows * r), int(cols * r)

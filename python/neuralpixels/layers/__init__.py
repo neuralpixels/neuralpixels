@@ -1,6 +1,7 @@
 
 # convolutions
 from .convolutions import subpixel_upscale
+from .convolutions import subpixel_downscale
 
 # activations
 from .activations import prelu

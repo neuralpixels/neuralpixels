@@ -19,16 +19,16 @@ with open(readme_path, "r") as fh:
 
 setuptools.setup(
     name='neuralpixels',
-    version='0.1',
-    scripts=['neuralpixels'],
+    version='0.0',
     author="Jaret Burkett",
     author_email="jaret@neuralpixels.com",
-    description="Official NeuralPixels package to aide in machine learning",
+    license='MIT',
+    description="A machine learning library with many tools to aide in training image based networks",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/neuralpixels/neuralpixels",
-    packages=setuptools.find_packages(),
-    platforms=["Windows", "Linux", "Solaris", "Mac OS-X", "Unix"],
+    packages=setuptools.find_packages(exclude=['neuralpixels_tests']),
+    install_requires=['numpy'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

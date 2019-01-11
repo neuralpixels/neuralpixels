@@ -19,7 +19,7 @@ with open(readme_path, "r") as fh:
 
 setuptools.setup(
     name='neuralpixels',
-    version='0.0',
+    version='0.0.0',
     author="Jaret Burkett",
     author_email="jaret@neuralpixels.com",
     license='MIT',

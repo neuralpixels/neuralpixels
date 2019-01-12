@@ -2,26 +2,29 @@ import tensorflow as tf
 import numpy as np
 
 
-def _convolve(inputs, kernel, pad=None):
-    if pad is not None:
-        inputs_padded = tf.pad(inputs, [[0, 0], [pad, pad], [pad, pad], [0, 0]], "REFLECT")
-    else:
-        inputs_padded = inputs
-
-    input_channels = tf.split(inputs_padded, num_or_size_splits=3, axis=-1)
-    outputs = []
-    for channel in input_channels:
-        f = tf.nn.conv2d(
-            channel,
+def _convolve(inputs, kernel, pad=None, name=None):
+    with tf.name_scope(name=name):
+        if pad is not None:
+            inputs_padded = tf.pad(inputs, [[0, 0], [pad, pad], [pad, pad], [0, 0]], "REFLECT")
+        else:
+            inputs_padded = inputs
+        output = tf.nn.conv2d(
+            inputs_padded,
             kernel,
             strides=[1, 1, 1, 1],
             padding='SAME'
         )
-        outputs.append(f)
-    output = tf.concat(outputs, axis=-1)
-    if pad is not None:
-        output = tf.slice(output, [0, pad, pad, 0], tf.shape(inputs))
-    return output
+        if pad is not None:
+            output = tf.slice(output, [0, pad, pad, 0], tf.shape(inputs))
+        return output
+
+
+def one_to_three_channel_kernel(kernel):
+    out = np.zeros([kernel.shape[0], kernel.shape[1], 3, 3], dtype=kernel.dtype)
+    out[:, :, 0:1, 0:1] = kernel
+    out[:, :, 1:2, 1:2] = kernel
+    out[:, :, 2:3, 2:3] = kernel
+    return out
 
 
 def gaus_blur(inputs):
@@ -35,17 +38,17 @@ def gaus_blur(inputs):
     a[0, 2, :, :] = 0.0625
     a[2, 0, :, :] = 0.0625
     a[2, 2, :, :] = 0.0625
-    kernel = tf.constant(a, dtype=tf.float32)
-    return _convolve(inputs, kernel, pad=4)
+    kernel = tf.constant(one_to_three_channel_kernel(a), dtype=tf.float32)
+    return _convolve(inputs, kernel, pad=4, name='gaus_blur')
 
 
 def box_blur(inputs, radius=4):
     diameter = radius * 2
     a = np.zeros([diameter, diameter, 1, 1])
     a[:, :, :, :] = 1 / (diameter * diameter)
-    kernel = tf.constant(a, dtype=tf.float32)
+    kernel = tf.constant(one_to_three_channel_kernel(a), dtype=tf.float32)
 
-    return _convolve(inputs, kernel, pad=radius + 1)
+    return _convolve(inputs, kernel, pad=radius + 1, name='box_blur')
 
 
 def sharpen(inputs, intensity=8, radius=3):
@@ -56,8 +59,8 @@ def sharpen(inputs, intensity=8, radius=3):
     center = radius // 2
     a[:, :, :, :] = x
     a[center, center, :, :] = intensity
-    kernel = tf.constant(a, dtype=tf.float32)
-    return tf.add(inputs, _convolve(inputs, kernel, pad=radius + 1))
+    kernel = tf.constant(one_to_three_channel_kernel(a), dtype=tf.float32)
+    return tf.add(inputs, _convolve(inputs, kernel, pad=radius + 1, name='sharpen'))
 
 
 def edge(inputs, intensity=10, radius=3):
@@ -68,8 +71,8 @@ def edge(inputs, intensity=10, radius=3):
     center = radius // 2
     a[:, :, :, :] = x
     a[center, center, :, :] = intensity
-    kernel = tf.constant(a, dtype=tf.float32)
-    return _convolve(inputs, kernel, pad=radius + 1)
+    kernel = tf.constant(one_to_three_channel_kernel(a), dtype=tf.float32)
+    return _convolve(inputs, kernel, pad=radius + 1, name='edge')
 
 
 def sobel(inputs):
@@ -78,8 +81,8 @@ def sobel(inputs):
     a[0, 1, :, :] = 2
     a[2, :, :, :] = -1
     a[2, 1, :, :] = -2
-    kernel = tf.constant(a, dtype=tf.float32)
-    return _convolve(inputs, kernel, pad=4)
+    kernel = tf.constant(one_to_three_channel_kernel(a), dtype=tf.float32)
+    return _convolve(inputs, kernel, pad=4, name='sobel')
 
 
 def content_emphasis(inputs):
@@ -87,8 +90,8 @@ def content_emphasis(inputs):
     a[1, :, :, :] = -1
     a[:, 1, :, :] = -1
     a[1, 1, :, :] = 5
-    kernel = tf.constant(a, dtype=tf.float32)
-    return _convolve(inputs, kernel, pad=5)
+    kernel = tf.constant(one_to_three_channel_kernel(a), dtype=tf.float32)
+    return _convolve(inputs, kernel, pad=4, name='content_emphasis')
 
 
 def emboss(inputs):
@@ -100,5 +103,5 @@ def emboss(inputs):
     a[1, 2, :, :] = 1
     a[2, 1, :, :] = 1
     a[2, 2, :, :] = 2
-    kernel = tf.constant(a, dtype=tf.float32)
-    return _convolve(inputs, kernel, pad=4)
+    kernel = tf.constant(one_to_three_channel_kernel(a), dtype=tf.float32)
+    return _convolve(inputs, kernel, pad=4, name='emboss')

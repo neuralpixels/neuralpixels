@@ -4,6 +4,7 @@ import tensorflow as tf
 import numpy as np
 from neuralpixels.image import filters, make_collage
 from scipy.misc import imread, imsave
+from skimage.transform import resize
 from collections import OrderedDict
 
 
@@ -20,7 +21,8 @@ def run_filters_test():
 
     project_root = up_dir(4)
     test_img_path = os.path.join(project_root, 'assets', 'lenna.png')
-    test_img = imread(test_img_path, mode='RGB').astype(np.float32)
+    test_img = imread(test_img_path, mode='RGB')
+    test_img = resize(test_img, [256, 256, 3], anti_aliasing=True, preserve_range=True).astype(np.float32)
     _test_img = tf.constant(test_img)
     test_img_expanded = np.expand_dims(test_img, axis=0)
     _test_img_expanded = tf.constant(test_img_expanded)

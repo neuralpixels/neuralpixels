@@ -1,0 +1,506 @@
+{
+  "name": "vgg19",
+  "version": "0.0.1",
+  "license": "Copyright 2018 Jaret Burkett, All Rights Reserved",
+  "format": 2.0,
+  "total_size": 20024384,
+  "quantized": true,
+  "weights": {
+    "conv1_1/kernel": {
+      "filename": "conv1_1_kernel",
+      "size": 1728,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.004713413060880175,
+        "min_value": -0.6504510024014641
+      },
+      "shape": [
+        3,
+        3,
+        3,
+        64
+      ],
+      "checksum": "2f657353ca46687f1a76b491b499b39a"
+    },
+    "conv1_1/bias": {
+      "filename": "conv1_1_bias",
+      "size": 64,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.006919113356693118,
+        "min_value": -0.013838226713386236
+      },
+      "shape": [
+        64
+      ],
+      "checksum": "127841cc29298694769894e4cd204531"
+    },
+    "conv1_2/kernel": {
+      "filename": "conv1_2_kernel",
+      "size": 36864,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0017944358727511238,
+        "min_value": -0.21353786885738374
+      },
+      "shape": [
+        3,
+        3,
+        64,
+        64
+      ],
+      "checksum": "43d07cf792b2d55b259c2aed25568b4a"
+    },
+    "conv1_2/bias": {
+      "filename": "conv1_2_bias",
+      "size": 64,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.006805431375316545,
+        "min_value": -0.9595658239196329
+      },
+      "shape": [
+        64
+      ],
+      "checksum": "49613a55b4d98f01ec50ad405b81a970"
+    },
+    "conv2_1/kernel": {
+      "filename": "conv2_1_kernel",
+      "size": 73728,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.002977440871444403,
+        "min_value": -0.3364508184732175
+      },
+      "shape": [
+        3,
+        3,
+        64,
+        128
+      ],
+      "checksum": "040e223c93569b2d382533c733863dbf"
+    },
+    "conv2_1/bias": {
+      "filename": "conv2_1_bias",
+      "size": 128,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.002046426955391379,
+        "min_value": -0.16985343729748445
+      },
+      "shape": [
+        128
+      ],
+      "checksum": "c806ee879d74e0565e19b14ab7a07343"
+    },
+    "conv2_2/kernel": {
+      "filename": "conv2_2_kernel",
+      "size": 147456,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0016900494402530147,
+        "min_value": -0.18759548786808464
+      },
+      "shape": [
+        3,
+        3,
+        128,
+        128
+      ],
+      "checksum": "b43928297ab770dc616326a9a931d86e"
+    },
+    "conv2_2/bias": {
+      "filename": "conv2_2_bias",
+      "size": 128,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.004494813610525692,
+        "min_value": -0.5348828196525574
+      },
+      "shape": [
+        128
+      ],
+      "checksum": "1d4d0b1446bdd0998ff6e1a4d3ae52e4"
+    },
+    "conv3_1/kernel": {
+      "filename": "conv3_1_kernel",
+      "size": 294912,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.003007548696854535,
+        "min_value": -0.1714302757207085
+      },
+      "shape": [
+        3,
+        3,
+        128,
+        256
+      ],
+      "checksum": "89730cb203f45182a254fc5c76793201"
+    },
+    "conv3_1/bias": {
+      "filename": "conv3_1_bias",
+      "size": 256,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0015797854054207896,
+        "min_value": -0.17377639459628685
+      },
+      "shape": [
+        256
+      ],
+      "checksum": "f6b7bb70a5ca71586082a6ac500632b4"
+    },
+    "conv3_2/kernel": {
+      "filename": "conv3_2_kernel",
+      "size": 589824,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0027369221051534018,
+        "min_value": -0.1450568715731303
+      },
+      "shape": [
+        3,
+        3,
+        256,
+        256
+      ],
+      "checksum": "4c37cba66c2203b32cc02e9a7bf296be"
+    },
+    "conv3_2/bias": {
+      "filename": "conv3_2_bias",
+      "size": 256,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0016978535582037532,
+        "min_value": -0.1595982344711528
+      },
+      "shape": [
+        256
+      ],
+      "checksum": "86a5f6d1cbb68159b5f1f43736cfa982"
+    },
+    "conv3_3/kernel": {
+      "filename": "conv3_3_kernel",
+      "size": 589824,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0011888442962777381,
+        "min_value": -0.08559678933199714
+      },
+      "shape": [
+        3,
+        3,
+        256,
+        256
+      ],
+      "checksum": "683db5033d5c3d4225d3499257ce665c"
+    },
+    "conv3_3/bias": {
+      "filename": "conv3_3_bias",
+      "size": 256,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.001797278576037463,
+        "min_value": -0.11322855029036016
+      },
+      "shape": [
+        256
+      ],
+      "checksum": "805c7b3cd0d18cb1f0d21d171418a20e"
+    },
+    "conv3_4/kernel": {
+      "filename": "conv3_4_kernel",
+      "size": 589824,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0013224616938946293,
+        "min_value": -0.0991846270420972
+      },
+      "shape": [
+        3,
+        3,
+        256,
+        256
+      ],
+      "checksum": "13d4a84241eda8b1e55585f99d2cbeb0"
+    },
+    "conv3_4/bias": {
+      "filename": "conv3_4_bias",
+      "size": 256,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0013401166773309894,
+        "min_value": -0.09112793405850728
+      },
+      "shape": [
+        256
+      ],
+      "checksum": "27a33745b3a2010cd8d290400ecf91b3"
+    },
+    "conv4_1/kernel": {
+      "filename": "conv4_1_kernel",
+      "size": 1179648,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0014348510725825442,
+        "min_value": -0.1104835325888559
+      },
+      "shape": [
+        3,
+        3,
+        256,
+        512
+      ],
+      "checksum": "9a2d4c40e5b5972682da16e18fd1d2a5"
+    },
+    "conv4_1/bias": {
+      "filename": "conv4_1_bias",
+      "size": 512,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0004595814966687969,
+        "min_value": -0.03538777524349736
+      },
+      "shape": [
+        512
+      ],
+      "checksum": "6fca88e4f03dc80c5abf456bd2598bdd"
+    },
+    "conv4_2/kernel": {
+      "filename": "conv4_2_kernel",
+      "size": 2359296,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0019685134583828498,
+        "min_value": -0.11220526712782243
+      },
+      "shape": [
+        3,
+        3,
+        512,
+        512
+      ],
+      "checksum": "4705ddeea7bc259504b74d758271339b"
+    },
+    "conv4_2/bias": {
+      "filename": "conv4_2_bias",
+      "size": 512,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0006582752892784043,
+        "min_value": -0.056611674877942775
+      },
+      "shape": [
+        512
+      ],
+      "checksum": "b9e9847428d64b43a908b1568422eb6d"
+    },
+    "conv4_3/kernel": {
+      "filename": "conv4_3_kernel",
+      "size": 2359296,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.001523033427257164,
+        "min_value": -0.09138200563542984
+      },
+      "shape": [
+        3,
+        3,
+        512,
+        512
+      ],
+      "checksum": "4be890c50222e3c4e5e1247494b39181"
+    },
+    "conv4_3/bias": {
+      "filename": "conv4_3_bias",
+      "size": 512,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0006330082813898722,
+        "min_value": -0.07216294407844544
+      },
+      "shape": [
+        512
+      ],
+      "checksum": "41369f9e3eeff4d039dbd87532cb41f9"
+    },
+    "conv4_4/kernel": {
+      "filename": "conv4_4_kernel",
+      "size": 2359296,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0014028952986586327,
+        "min_value": -0.13608084396988737
+      },
+      "shape": [
+        3,
+        3,
+        512,
+        512
+      ],
+      "checksum": "e9e555fabd79c6023ec17a87102410a0"
+    },
+    "conv4_4/bias": {
+      "filename": "conv4_4_bias",
+      "size": 512,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.001173653614287283,
+        "min_value": -0.11149709335729188
+      },
+      "shape": [
+        512
+      ],
+      "checksum": "adb91101461603db1d7f60e7a03845ae"
+    },
+    "conv5_1/kernel": {
+      "filename": "conv5_1_kernel",
+      "size": 2359296,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.001797486549498988,
+        "min_value": -0.11863411226693321
+      },
+      "shape": [
+        3,
+        3,
+        512,
+        512
+      ],
+      "checksum": "b51ea74f62b55b80e1c6cb4cbab6aa28"
+    },
+    "conv5_1/bias": {
+      "filename": "conv5_1_bias",
+      "size": 512,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0017509167100868974,
+        "min_value": -0.1348205866766911
+      },
+      "shape": [
+        512
+      ],
+      "checksum": "71b467464760a6a52d24b740c915d742"
+    },
+    "conv5_2/kernel": {
+      "filename": "conv5_2_kernel",
+      "size": 2359296,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0018349884479653602,
+        "min_value": -0.11376928377385233
+      },
+      "shape": [
+        3,
+        3,
+        512,
+        512
+      ],
+      "checksum": "ae4e079305097fe1619cfcf983de5569"
+    },
+    "conv5_2/bias": {
+      "filename": "conv5_2_bias",
+      "size": 512,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0029383946867550122,
+        "min_value": -0.2850242846152362
+      },
+      "shape": [
+        512
+      ],
+      "checksum": "70b7334d442f41f342390027d35f7e5b"
+    },
+    "conv5_3/kernel": {
+      "filename": "conv5_3_kernel",
+      "size": 2359296,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0015210261239725,
+        "min_value": -0.124724142165745
+      },
+      "shape": [
+        3,
+        3,
+        512,
+        512
+      ],
+      "checksum": "b2796cf8f128a347f39acd0c9eb84f32"
+    },
+    "conv5_3/bias": {
+      "filename": "conv5_3_bias",
+      "size": 512,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.009505366811565325,
+        "min_value": -1.4162996549232334
+      },
+      "shape": [
+        512
+      ],
+      "checksum": "66282ebcf939354cc6382d7fc4f80aaf"
+    },
+    "conv5_4/kernel": {
+      "filename": "conv5_4_kernel",
+      "size": 2359296,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.0011175481127757652,
+        "min_value": -0.11398990750312805
+      },
+      "shape": [
+        3,
+        3,
+        512,
+        512
+      ],
+      "checksum": "8e92d170faa896cef763940e2ab350e0"
+    },
+    "conv5_4/bias": {
+      "filename": "conv5_4_bias",
+      "size": 512,
+      "dtype": "float32",
+      "quantization": {
+        "dtype": "uint8",
+        "scale": 0.03959601860420377,
+        "min_value": -0.4751522232504452
+      },
+      "shape": [
+        512
+      ],
+      "checksum": "cdaaa4336429743ed8c357757d8359f3"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 
-def noise_embed(inputs, mean=0.0, stddev=0.05, name='noise', trainable=False):
+def noise_embed(inputs, mean=0.0, stddev=0.1, name='noise', trainable=False):
     """
     Creates a noise embedding layer. If `trainable` is set `True`,
     then it will create a trainable noise embedding that trains the mean and stddev on a
@@ -30,6 +30,7 @@ def noise_embed(inputs, mean=0.0, stddev=0.05, name='noise', trainable=False):
                 dtype=inputs.dtype,
                 initializer=tf.constant_initializer(mean)
             )
+            _mean = tf.reshape(_mean, [1, 1, 1, channels])
 
             _stddev = tf.get_variable(
                 name="stddev",
@@ -37,17 +38,21 @@ def noise_embed(inputs, mean=0.0, stddev=0.05, name='noise', trainable=False):
                 dtype=inputs.dtype,
                 initializer=tf.constant_initializer(stddev)
             )
+            _stddev = tf.reshape(_stddev, [1, 1, 1, channels])
         else:
             _mean = mean
             _stddev = stddev
 
+        max_noise = tf.reduce_max(tf.abs(inputs), axis=[1, 2], keepdims=True)
+
         raw_noise = tf.random_normal(
             shape=noise_shape,
             mean=0,
-            stddev=1.0,
+            stddev=10.0,
             dtype=inputs.dtype
         )
+        scaled_noise = raw_noise * (max_noise / 10.0)
 
         # scale and adjust noise to weights
-        noise = (raw_noise + _mean) * _stddev
+        noise = (scaled_noise + _mean) * _stddev
         return inputs + noise

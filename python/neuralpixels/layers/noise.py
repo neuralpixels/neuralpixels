@@ -16,7 +16,7 @@ def noise_embed(inputs, mean=0.0, stddev=0.05, name='noise', trainable=False):
     :param name: scope name
     :type name: str
     :param trainable: If true, the mean and std deviation will be trainable weights on a per channel basis
-    :type name: bool
+    :type trainable: bool
     :return: A tensor with the same shape as input with trained noise added to it
     """
     with tf.variable_scope(name):

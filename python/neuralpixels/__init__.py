@@ -5,4 +5,5 @@ from __future__ import print_function as _print_function
 
 from neuralpixels import layers
 from neuralpixels import image
+from neuralpixels import video
 from neuralpixels import losses

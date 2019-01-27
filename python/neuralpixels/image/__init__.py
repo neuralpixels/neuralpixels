@@ -9,3 +9,4 @@ from .filters import emboss
 
 from .display import make_collage
 from .display import make_stacked_collage
+from .display import show_img

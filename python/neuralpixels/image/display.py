@@ -3,6 +3,11 @@ import numpy as np
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
+import atexit
+import cv2
+import matplotlib.pyplot as plt
+
+is_window_shown = False
 
 
 def make_collage(images, match_size=True, v_stack=False, uint_clip=True):
@@ -87,3 +92,40 @@ def make_stacked_collage(images_list, match_size=True, uint_clip=True):
         else:
             collage = np.concatenate((collage, c), 0)
     return collage
+
+
+def show_img(img, method='cv'):
+    global is_window_shown
+    width, height, chan = img.shape
+
+    img_to_show = np.clip(img.copy(), 0, 255).astype(np.uint8)
+    if method == 'plt':
+        fig = plt.figure(figsize=(height / 100, width / 100))
+        ax = plt.Axes(fig, [0., 0., 1., 1.])
+        ax.set_axis_off()
+        fig.add_axes(ax)
+        ax.imshow(img_to_show, cmap=plt.get_cmap("bone"))
+        plt.show()
+    else:
+        img = np.clip(img, 0, 255).astype(np.uint8)
+        cv2.imshow('NEURAL PIXELS', img[:, :, ::-1])
+        k = cv2.waitKey(10) & 0xFF
+        if k == 27:  # Esc key to stop
+            print('\nESC pressed, stopping')
+            raise KeyboardInterrupt
+        # show again to initialize the window if first
+        if not is_window_shown:
+            cv2.imshow('NEURAL PIXELS', img[:, :, ::-1])
+            k = cv2.waitKey(10) & 0xFF
+            if k == 27:  # Esc key to stop
+                print('\nESC pressed, stopping')
+                raise KeyboardInterrupt
+        is_window_shown = True
+
+
+def on_exit():
+    if is_window_shown:
+        cv2.destroyAllWindows()
+
+
+atexit.register(on_exit)

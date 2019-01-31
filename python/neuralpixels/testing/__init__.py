@@ -1,5 +1,6 @@
 import os
 from neuralpixels.testing import image
+from neuralpixels.testing import layers
 test_root = os.path.dirname(__file__)
 
 
@@ -12,9 +13,11 @@ class Tester(object):
         num_passed, num_failed = test_function()
         self.num_passed += num_passed
         self.num_failed += num_failed
+        print('')
 
     def run_all(self):
         self._run_test(image.run_filters_test)
+        self._run_test(layers.run_prelu_clipped_test)
 
 
 def run_all_tests():

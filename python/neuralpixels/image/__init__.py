@@ -12,4 +12,7 @@ from neuralpixels.image.display import make_stacked_collage
 from neuralpixels.image.display import show_img
 
 from neuralpixels.image.io import get_img
+from neuralpixels.image.io import get_img_paths
 from neuralpixels.image.io import save_img
+
+from neuralpixels.image.loader import ImageLoader

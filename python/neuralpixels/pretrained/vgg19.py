@@ -159,7 +159,7 @@ def process(input_tensor, network=None, reuse_weights=True, dtype='float32'):
     def _conv_layer(inputs, kernel_weights, bias_weights):
         conv_out = tf.nn.conv2d(
             input=inputs,
-            filter=kernel_weights,
+            filters=kernel_weights,
             strides=(1, 1, 1, 1),
             padding='SAME'
         )
@@ -167,8 +167,8 @@ def process(input_tensor, network=None, reuse_weights=True, dtype='float32'):
         return tf.nn.relu(bias_added)
 
     def _pool_layer(inputs):
-        return tf.nn.max_pool(
-            value=inputs,
+        return tf.nn.max_pool2d(
+            input=inputs,
             ksize=(1, 2, 2, 1),
             strides=(1, 2, 2, 1),
             padding='SAME'

@@ -27,7 +27,7 @@ def run_filters_test():
     test_img_expanded = np.expand_dims(test_img, axis=0)
     _test_img_expanded = tf.constant(test_img_expanded)
 
-    tfconfig = tf.ConfigProto(allow_soft_placement=True)
+    tfconfig = tf.compat.v1.ConfigProto(allow_soft_placement=True)
     tfconfig.gpu_options.allow_growth = True
 
     functions = [
@@ -41,7 +41,7 @@ def run_filters_test():
     ]
     collage_dict = OrderedDict()
     collage_dict['input'] = test_img.copy().astype(np.uint8)
-    with tf.Session(config=tfconfig) as sess:
+    with tf.compat.v1.Session(config=tfconfig) as sess:
         func_name_width = 25
         for func in functions:
             name_str = '{} {} '.format(func.__name__, ''.rjust(func_name_width - len(func.__name__), '.'))

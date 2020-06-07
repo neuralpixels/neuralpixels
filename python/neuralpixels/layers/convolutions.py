@@ -12,7 +12,7 @@ import numpy as np
 import itertools
 
 
-def subpixel_upscale(inputs, zoom=2, name='subpixel_upscale', trainable=False, legacy=False):
+def subpixel_upscale(inputs, zoom=2, name='subpixel_upscale', trainable=False, legacy=False, weights=None):
     """Subpixel Upscale
 
     Source for original implementation: https://arxiv.org/abs/1609.05158
@@ -41,6 +41,7 @@ def subpixel_upscale(inputs, zoom=2, name='subpixel_upscale', trainable=False, l
             an initializer and trained from there.
         legacy (bool): Use the legacy kernel which is a DIP replacement for the
             original implementation
+        weights: A custom kernel to use as initializer
 
     Returns:
         A `Tensor` with a shape of [bs, in_rows * zoom, in_cols * zoom, in_chan
@@ -52,7 +53,7 @@ def subpixel_upscale(inputs, zoom=2, name='subpixel_upscale', trainable=False, l
         then the other (with the same parameters), will result in an output
         identical to the input.
     """
-    with tf.variable_scope(name):
+    with tf.compat.v1.variable_scope(name):
         r = zoom
         batch_size, rows, cols, in_channels = inputs.get_shape().as_list()
         kernel_filter_size = r
@@ -76,11 +77,13 @@ def subpixel_upscale(inputs, zoom=2, name='subpixel_upscale', trainable=False, l
         tf_shape = tf.stack(new_shape)
         strides_shape = [1, r, r, 1]
 
+        if weights is not None:
+            kernel = weights
         if trainable:
-            kernel_weights = tf.get_variable(
+            kernel_weights = tf.compat.v1.get_variable(
                 name='kernel',
                 shape=kernel.shape,
-                initializer=tf.constant_initializer(kernel),
+                initializer=tf.compat.v1.constant_initializer(kernel),
                 dtype=inputs.dtype
             )
         else:
@@ -132,7 +135,7 @@ def subpixel_downscale(inputs, zoom=2, name='subpixel_downscale', trainable=Fals
         then the other (with the same parameters), will result in an output
         identical to the input.
     """
-    with tf.variable_scope(name):
+    with tf.compat.v1.variable_scope(name):
         r = zoom
         batch_size, rows, cols, in_channels = inputs.get_shape().as_list()
         kernel_filter_size = r
@@ -153,15 +156,15 @@ def subpixel_downscale(inputs, zoom=2, name='subpixel_downscale', trainable=Fals
         strides_shape = [1, r, r, 1]
 
         if trainable:
-            kernel_weights = tf.get_variable(
+            kernel_weights = tf.compat.v1.get_variable(
                 name='kernel',
                 shape=kernel.shape,
-                initializer=tf.constant_initializer(kernel),
+                initializer=tf.compat.v1.constant_initializer(kernel),
                 dtype=inputs.dtype
             )
         else:
             kernel_weights = tf.constant(kernel, dtype=inputs.dtype)
 
-        out = tf.nn.conv2d(inputs, kernel_weights, strides_shape, padding='VALID')
+        out = tf.nn.conv2d(input=inputs, filters=kernel_weights, strides=strides_shape, padding='VALID')
 
         return out

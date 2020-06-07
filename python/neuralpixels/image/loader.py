@@ -7,6 +7,7 @@ import scipy.misc
 import numpy as np
 import scipy.ndimage
 from neuralpixels.image.io import get_img, get_img_paths
+from neuralpixels.image.scipy_old import imread, imsave, imresize
 
 
 def default_epoch_function(epoch_num):
@@ -87,7 +88,7 @@ class ImageLoader(threading.Thread):
                         new_height = self.height
                         new_width = int(new_height / img.shape[0] * img.shape[1])
                         new_img_shape = (new_width, new_height, 3)
-                    img = scipy.misc.imresize(img, new_img_shape)
+                    img = imresize(img, new_img_shape)
 
             # scale img
             # see if we can scale
@@ -105,7 +106,7 @@ class ImageLoader(threading.Thread):
                         new_height = random.randint(self.height, img.shape[0])
                         new_width = int(new_height / img.shape[0] * img.shape[1])
                         new_img_shape = (new_width, new_height, 3)
-                    img = scipy.misc.imresize(img, new_img_shape)
+                    img = imresize(img, new_img_shape)
                 else:
                     height_scalar = self.height / img.shape[0]
                     width_scalar = self.width / img.shape[1]
@@ -119,7 +120,7 @@ class ImageLoader(threading.Thread):
                         new_height = self.height
                         new_width = int(new_height / img.shape[0] * img.shape[1])
                         new_img_shape = (new_width, new_height, 3)
-                    img = scipy.misc.imresize(img, new_img_shape)
+                    img = imresize(img, new_img_shape)
 
             # crop
             if self.height < img.shape[0] or self.width < img.shape[1]:

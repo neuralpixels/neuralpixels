@@ -1,11 +1,12 @@
 import os
 import scipy.misc
+from neuralpixels.image.scipy_old import imread, imsave
 import numpy as np
 from glob import glob
 
 
 def get_img(src, dtype=None):
-    img = scipy.misc.imread(src, mode='RGB')
+    img = imread(src, mode='RGB')
     if dtype is not None:
         return img.astype(dtype)
     else:
@@ -17,7 +18,7 @@ def save_img(out_path, img):
     dir_path = os.path.dirname(abs_out_path)
     os.makedirs(dir_path, exist_ok=True)
     img_to_save = np.clip(img.copy(), 0, 255).astype(np.uint8)
-    scipy.misc.imsave(abs_out_path, img_to_save)
+    imsave(abs_out_path, img_to_save)
 
 
 def get_img_paths(folder):

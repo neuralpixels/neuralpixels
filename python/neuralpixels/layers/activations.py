@@ -10,12 +10,12 @@ def prelu(inputs, name='prelu', alpha=0.25):
 
     :return: A `Tensor`. Has the same type as `features`.
     """
-    with tf.variable_scope(name):
+    with tf.compat.v1.variable_scope(name):
         shape = inputs.get_shape()[-1]
-        alphas = tf.get_variable(
+        alphas = tf.compat.v1.get_variable(
             name="alpha",
             shape=shape,
-            initializer=tf.constant_initializer(alpha),
+            initializer=tf.compat.v1.constant_initializer(alpha),
             dtype=tf.float32
         )
         pos = tf.nn.relu(inputs)
@@ -33,19 +33,19 @@ def prelu_clipped(inputs, name='prelu_clip', alpha=0.25, clip=6.0, epsilon=1e-5)
 
     :return: A `Tensor`. Has the same type as `features`.
     """
-    with tf.variable_scope(name):
+    with tf.compat.v1.variable_scope(name):
         base_clip = 10.00001
         shape = inputs.get_shape()[-1]
-        alphas = tf.get_variable(
+        alphas = tf.compat.v1.get_variable(
             name="alpha",
             shape=shape,
-            initializer=tf.constant_initializer(alpha),
+            initializer=tf.compat.v1.constant_initializer(alpha),
             dtype=tf.float32
         )
-        clips = tf.get_variable(
+        clips = tf.compat.v1.get_variable(
             name="clip",
             shape=shape,
-            initializer=tf.constant_initializer(clip),
+            initializer=tf.compat.v1.constant_initializer(clip),
             dtype=tf.float32
         )
         eps_clips = clips + epsilon

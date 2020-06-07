@@ -19,33 +19,33 @@ def noise_embed(inputs, mean=0.0, stddev=0.1, name='noise', trainable=False):
     :type trainable: bool
     :return: A tensor with the same shape as input with trained noise added to it
     """
-    with tf.variable_scope(name):
+    with tf.compat.v1.variable_scope(name):
         noise_shape = inputs.get_shape().as_list()
         channels = noise_shape[-1]
 
         if trainable:
-            _mean = tf.get_variable(
+            _mean = tf.compat.v1.get_variable(
                 name='mean',
                 shape=channels,
                 dtype=inputs.dtype,
-                initializer=tf.constant_initializer(mean)
+                initializer=tf.compat.v1.constant_initializer(mean)
             )
             _mean = tf.reshape(_mean, [1, 1, 1, channels])
 
-            _stddev = tf.get_variable(
+            _stddev = tf.compat.v1.get_variable(
                 name="stddev",
                 shape=channels,
                 dtype=inputs.dtype,
-                initializer=tf.constant_initializer(stddev)
+                initializer=tf.compat.v1.constant_initializer(stddev)
             )
             _stddev = tf.reshape(_stddev, [1, 1, 1, channels])
         else:
             _mean = mean
             _stddev = stddev
 
-        max_noise = tf.reduce_max(tf.abs(inputs), axis=[1, 2], keepdims=True)
+        max_noise = tf.reduce_max(input_tensor=tf.abs(inputs), axis=[1, 2], keepdims=True)
 
-        raw_noise = tf.random_normal(
+        raw_noise = tf.random.normal(
             shape=noise_shape,
             mean=0,
             stddev=10.0,

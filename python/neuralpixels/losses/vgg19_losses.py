@@ -7,20 +7,20 @@ CONTENT_LAYERS = ('conv4_2', 'conv5_2')
 
 
 def tensor_size(tensor):
-    height = tf.shape(tensor)[-3]
-    width = tf.shape(tensor)[-2]
-    filters = tf.shape(tensor)[-1]
+    height = tf.shape(input=tensor)[-3]
+    width = tf.shape(input=tensor)[-2]
+    filters = tf.shape(input=tensor)[-1]
     return height * width * filters
 
 
 def _convert_to_gram_matrix(inputs):
-    shape = tf.shape(inputs)
+    shape = tf.shape(input=inputs)
     batch, height, width, filters = shape[0], shape[1], shape[2], shape[3]
     _size = height * width * filters
     size = tf.cast(_size, inputs.dtype)
 
     feats = tf.reshape(inputs, (batch, height * width, filters))
-    feats_t = tf.transpose(feats, perm=[0, 2, 1])
+    feats_t = tf.transpose(a=feats, perm=[0, 2, 1])
     grams_raw = tf.matmul(feats_t, feats)
     gram_matrix = tf.divide(grams_raw, size)
     return gram_matrix
@@ -50,11 +50,11 @@ def style_loss(targets, predictions, style_layers=STYLE_LAYERS):
         def seperated_loss(y_pred, y_true):
             sum_axis = [1, 2]
             diff = tf.abs(y_pred - y_true)
-            l2 = tf.reduce_sum(diff ** 2, axis=sum_axis) / 2
+            l2 = tf.reduce_sum(input_tensor=diff ** 2, axis=sum_axis) / 2
             return 2. * l2 / content_size
 
         pred_itemized_loss = seperated_loss(pred_grams, target_grams)
-        layer_loss = tf.reduce_mean(pred_itemized_loss * vgg19.layer_weights[style_layer]['style'])
+        layer_loss = tf.reduce_mean(input_tensor=pred_itemized_loss * vgg19.layer_weights[style_layer]['style'])
 
         # add this layer loss to the total loss
         total_style_loss += layer_loss
@@ -87,11 +87,11 @@ def content_loss(targets, predictions, content_layers=CONTENT_LAYERS):
         def seperated_loss(y_pred, y_true):
             sum_axis = [1, 2, 3]
             diff = tf.abs(y_pred - y_true)
-            l2 = tf.reduce_sum(diff ** 2, axis=sum_axis) / 2
+            l2 = tf.reduce_sum(input_tensor=diff ** 2, axis=sum_axis) / 2
             return 2. * l2 / content_size
 
         pred_itemized_loss = seperated_loss(pred_layer, target_layer)
-        layer_loss = tf.reduce_mean(pred_itemized_loss * vgg19.layer_weights[content_layer]['content'])
+        layer_loss = tf.reduce_mean(input_tensor=pred_itemized_loss * vgg19.layer_weights[content_layer]['content'])
 
         # add this layer loss to the total loss
         total_content_loss += layer_loss

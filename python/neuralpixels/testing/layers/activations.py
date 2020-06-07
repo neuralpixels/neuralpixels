@@ -7,16 +7,16 @@ def run_prelu_clipped_test():
     print('neuralpixels.activations.prelu_clipped')
     num_passed = 0
     num_failed = 0
-    tfconfig = tf.ConfigProto(allow_soft_placement=True)
+    tfconfig = tf.compat.v1.ConfigProto(allow_soft_placement=True)
     tfconfig.gpu_options.allow_growth = True
-    with tf.Session(config=tfconfig) as sess:
-        _noise_wont_clip = tf.random_uniform([1, 10, 10, 3], minval=1, maxval=6, dtype=tf.float32)
-        _noise_will_clip = tf.random_uniform([1, 10, 10, 3], minval=1, maxval=8, dtype=tf.float32)
+    with tf.compat.v1.Session(config=tfconfig) as sess:
+        _noise_wont_clip = tf.random.uniform([1, 10, 10, 3], minval=1, maxval=6, dtype=tf.float32)
+        _noise_will_clip = tf.random.uniform([1, 10, 10, 3], minval=1, maxval=8, dtype=tf.float32)
 
         _output_wont_clip = prelu_clipped(_noise_wont_clip, name='prelu_clip1')
         _output_will_clip = prelu_clipped(_noise_will_clip, name='prelu_clip2')
 
-        sess.run(tf.global_variables_initializer())
+        sess.run(tf.compat.v1.global_variables_initializer())
 
         noise_wont_clip, noise_will_clip, output_wont_clip, output_will_clip = sess.run(
             [_noise_wont_clip, _noise_will_clip, _output_wont_clip, _output_will_clip]

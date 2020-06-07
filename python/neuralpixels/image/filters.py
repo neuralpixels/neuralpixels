@@ -3,19 +3,19 @@ import numpy as np
 
 
 def _convolve(inputs, kernel, pad=None, name=None):
-    with tf.name_scope(name=name):
+    with tf.compat.v1.name_scope(name=name):
         if pad is not None:
-            inputs_padded = tf.pad(inputs, [[0, 0], [pad, pad], [pad, pad], [0, 0]], "REFLECT")
+            inputs_padded = tf.pad(tensor=inputs, paddings=[[0, 0], [pad, pad], [pad, pad], [0, 0]], mode="REFLECT")
         else:
             inputs_padded = inputs
         output = tf.nn.conv2d(
-            inputs_padded,
-            kernel,
+            input=inputs_padded,
+            filters=kernel,
             strides=[1, 1, 1, 1],
             padding='SAME'
         )
         if pad is not None:
-            output = tf.slice(output, [0, pad, pad, 0], tf.shape(inputs))
+            output = tf.slice(output, [0, pad, pad, 0], tf.shape(input=inputs))
         return output
 
 

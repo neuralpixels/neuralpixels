@@ -15,27 +15,27 @@ def residual_blending(inputs1, inputs2, name='res_blend', shift=0.0, scale=0.5):
     :param scale: Initial scale for both inputs
     :return: A `Tensor` with the same shape as the inputs.
     """
-    with tf.variable_scope(name):
+    with tf.compat.v1.variable_scope(name):
         channels = inputs1.get_shape()[-1]
-        shift_var1 = tf.get_variable(
+        shift_var1 = tf.compat.v1.get_variable(
             name='shift1',
             shape=channels,
-            initializer=tf.constant_initializer(shift)
+            initializer=tf.compat.v1.constant_initializer(shift)
         )
-        scale_var1 = tf.get_variable(
+        scale_var1 = tf.compat.v1.get_variable(
             name="scale1",
             shape=channels,
-            initializer=tf.constant_initializer(scale)
+            initializer=tf.compat.v1.constant_initializer(scale)
         )
-        shift_var2 = tf.get_variable(
+        shift_var2 = tf.compat.v1.get_variable(
             name='shift2',
             shape=channels,
-            initializer=tf.constant_initializer(shift)
+            initializer=tf.compat.v1.constant_initializer(shift)
         )
-        scale_var2 = tf.get_variable(
+        scale_var2 = tf.compat.v1.get_variable(
             name="scale2",
             shape=channels,
-            initializer=tf.constant_initializer(scale)
+            initializer=tf.compat.v1.constant_initializer(scale)
         )
         outputs_1 = (inputs1 + shift_var1) * scale_var1
         outputs_2 = (inputs2 + shift_var2) * scale_var2
